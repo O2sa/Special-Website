@@ -127,7 +127,8 @@ window.onscroll = () => {
   }
 };
 
-// Create Pop for Gallery images
+let popBoxState;
+// Create Popup box for Gallery images
 let ourGallery = document.querySelectorAll(".gallery .images-box img");
 
 ourGallery.forEach((img) => {
@@ -151,6 +152,7 @@ ourGallery.forEach((img) => {
     // Create image element
     let image = document.createElement("img");
     image.src = img.src;
+    image.className = "open";
 
     // add image to PopBox
     popBox.appendChild(image);
@@ -164,11 +166,13 @@ ourGallery.forEach((img) => {
     closeButton.appendChild(document.createTextNode("X"));
     popBox.appendChild(closeButton);
 
+    popBoxState = document.querySelector("pop-box");
     // close popBox
     closeButton.addEventListener("click", () => {
       closeButton.parentNode.remove();
       document.querySelector(".pop-overlay").remove();
     });
+ 
   });
 });
 
@@ -242,10 +246,10 @@ resetButton.addEventListener("click", () => {
   window.location.reload();
 });
 
-
 // Toggle Menu
 let toggleBtn = document.querySelector(".toggle-menu");
 let links = document.querySelector(".links");
+let settingBox = document.querySelector(".setting-box");
 
 toggleBtn.onclick = (e) => {
   e.stopPropagation();
@@ -254,21 +258,22 @@ toggleBtn.onclick = (e) => {
   links.classList.toggle("open");
 };
 
-document.body.onclick =(e) => {
-
-if(e.target!==toggleBtn && e.target!==links)
-{
-  toggleBtn.classList.remove("menu-active");
+document.body.onclick = (e) => {
+  // clone menu list onclicl
+  if (
+    e.target !== toggleBtn &&
+    e.target !== links &&
+    toggleBtn.classList.contains("menu-active")
+  ) {
+    toggleBtn.classList.remove("menu-active");
 
     links.classList.remove("open");
-
+  }
+  if (e.target === document.querySelector(".pop-overlay")) {
+    document.querySelector(".pop-box").remove();
+    e.target.remove();
+  }
 };
-  // if (toggleBtn.classList.contains("menu-active")) {
-  //   toggleBtn.classList.toggle("menu-active");
-
-  //   links.classList.toggle("open");
-  // }
-};
-links.onclick= (e)=> {
-e.stopPropagation();
+links.onclick = (e) => {
+  e.stopPropagation();
 };
