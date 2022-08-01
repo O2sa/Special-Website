@@ -1,0 +1,7 @@
+- No Framework
+- Vanllia JavaScript
+- Many Plugins
+- JQuery fo Plugins
+-UI/UX Sketches
+- Mind Mapping
+- N
